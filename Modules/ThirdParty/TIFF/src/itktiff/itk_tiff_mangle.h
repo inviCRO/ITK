@@ -80,7 +80,8 @@ The developer will then need to *MANUALLY* add the symbols to the list below. Pl
 #endif
 
 // Section containing symbols which are found in Linux but not in all platforms
-#ifdef __linux__
+//#ifdef __linux__
+#ifndef _WIN32
 #define TIFFFaxBlackCodes itk_TIFFFaxBlackCodes
 #define TIFFFaxBlackTable itk_TIFFFaxBlackTable
 #define TIFFFaxMainTable itk_TIFFFaxMainTable
@@ -96,9 +97,10 @@ The developer will then need to *MANUALLY* add the symbols to the list below. Pl
 #define TIFFFaxWhiteCodes itk_TIFFFaxWhiteCodes
 #define TIFFFaxWhiteTable itk_TIFFFaxWhiteTable
 #define TIFFOpenW itk_TIFFOpenW
+#endif
+// Mac OS X appears to have these, too
 #define _TIFFerrorHandlerExt itk__TIFFerrorHandlerExt
 #define _TIFFwarningHandlerExt itk__TIFFwarningHandlerExt
-#endif
 
 //Section containing symbols which are found in Mac but not in all platforms
 
