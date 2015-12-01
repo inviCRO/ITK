@@ -83,10 +83,10 @@ The developer will then need to *MANUALLY* add the symbols to the list below. Pl
 //#ifdef __linux__
 #ifndef _WIN32
 #define TIFFFaxBlackCodes itk_TIFFFaxBlackCodes
-#define TIFFFaxBlackTable itk_TIFFFaxBlackTable
-#define TIFFFaxMainTable itk_TIFFFaxMainTable
+//#define TIFFFaxBlackTable itk_TIFFFaxBlackTable
+//#define TIFFFaxMainTable itk_TIFFFaxMainTable
 #define TIFFFaxWhiteCodes itk_TIFFFaxWhiteCodes
-#define TIFFFaxWhiteTable itk_TIFFFaxWhiteTable
+//#define TIFFFaxWhiteTable itk_TIFFFaxWhiteTable
 #endif
 
 // Section containing symbols which are found in Windows but not in all platforms
