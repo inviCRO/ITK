@@ -140,6 +140,7 @@ MultiThreader
 {
   // No threading library specified.  Do nothing.  The computation
   // will be run by the main execution thread.
+  return 0;
 }
 void
 MultiThreader
@@ -155,5 +156,14 @@ MultiThreader
 {
   // No threading library specified.  Do nothing.  The computation
   // will be run by the main execution thread.
+  return 0;
 }
+
+void MultiThreader::SetThreadProcessPriority(ThreadProcessIdType threadHandle)
+{
+  // No threading library specified.  Do nothing.  The computation
+  // will be run by the main execution thread.
+  return 0;
+}
+
 } // end namespace itk

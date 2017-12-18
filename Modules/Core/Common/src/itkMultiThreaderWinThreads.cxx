@@ -90,6 +90,9 @@ void MultiThreader::MultipleMethodExecute()
       {
       itkExceptionMacro("Error in thread creation!");
       }
+
+      // Set extra thread parameters
+      SetThreadProcessPriority(processId[threadCount]);
     }
 
   // Now, the parent thread calls the last method itself
@@ -155,6 +158,10 @@ ThreadIdType MultiThreader::SpawnThread(ThreadFunctionType f, void *UserData)
     {
     itkExceptionMacro("Error in thread creation !!!");
     }
+
+  // Set extra thread parameters
+  SetThreadProcessPriority(m_SpawnedThreadProcessID[id]);
+
   return id;
 }
 
@@ -218,7 +225,26 @@ MultiThreader
     {
     itkExceptionMacro("Error in thread creation !!!");
     }
+
+  // Set extra thread parameters
+  SetThreadProcessPriority(threadHandle);
+
   return threadHandle;
+}
+
+void MultiThreader::SetThreadProcessPriority(ThreadProcessIdType threadHandle)
+{
+  switch (m_GlobalThreadPriority) {
+    case 0:
+      SetThreadPriority(threadHandle, THREAD_PRIORITY_LOWEST);
+      break;
+    case 1:
+      SetThreadPriority(threadHandle, THREAD_PRIORITY_NORMAL);
+      break;
+    case 2:
+      SetThreadPriority(threadHandle, THREAD_PRIORITY_HIGHEST);
+      break;
+  }
 }
 
 } // end namespace itk

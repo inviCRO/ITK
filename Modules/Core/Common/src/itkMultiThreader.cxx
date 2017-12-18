@@ -104,6 +104,9 @@ ThreadIdType MultiThreader::m_GlobalMaximumNumberOfThreads = ITK_MAX_THREADS;
 // => Not initialized.
 ThreadIdType MultiThreader::m_GlobalDefaultNumberOfThreads = 0;
 
+// Initialize static member that controls global thread priority: 1
+ThreadIdType MultiThreader::m_GlobalThreadPriority = 1;
+
 void MultiThreader::SetGlobalMaximumNumberOfThreads(ThreadIdType val)
 {
   m_GlobalMaximumNumberOfThreads = val;
@@ -133,6 +136,23 @@ void MultiThreader::SetGlobalDefaultNumberOfThreads(ThreadIdType val)
                                               m_GlobalMaximumNumberOfThreads );
   m_GlobalDefaultNumberOfThreads  = vcl_max( m_GlobalDefaultNumberOfThreads,
                                               NumericTraits<ThreadIdType>::OneValue() );
+
+}
+
+ThreadIdType MultiThreader::GetGlobalThreadPriority()
+{
+    return m_GlobalThreadPriority;
+}
+
+void MultiThreader::SetGlobalThreadPriority(ThreadIdType val)
+{
+    m_GlobalThreadPriority = val;
+
+    // clamp between 1 and m_GlobalThreadPriority
+    m_GlobalThreadPriority = vcl_min( m_GlobalThreadPriority,
+                                       (ThreadIdType)ITK_MAX_THREAD_PRIORITY );
+    m_GlobalThreadPriority = vcl_max( m_GlobalThreadPriority,
+                                         NumericTraits<ThreadIdType>::ZeroValue() );
 
 }
 
