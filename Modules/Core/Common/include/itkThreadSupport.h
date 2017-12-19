@@ -72,6 +72,8 @@ namespace itk
 
 #endif
 
+#define ITK_MAX_THREAD_PRIORITY              2
+
   /** Platform specific Conditional Variable typedef
    */
 #if defined(ITK_USE_PTHREADS)

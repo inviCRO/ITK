@@ -126,6 +126,10 @@ void MultiThreader::MultipleMethodExecute()
       itkExceptionMacro(<< "Unable to create a thread.  pthread_create() returned "
                         << threadError);
       }
+
+    // Set extra thread parameters
+    SetThreadProcessPriority( process_id[thread_loop] );
+
     }
 
   // Now, the parent thread calls the last method itself
@@ -189,6 +193,9 @@ ThreadIdType MultiThreader::SpawnThread(ThreadFunctionType f, void *UserData)
     itkExceptionMacro(<< "Unable to create a thread.  pthread_create() returned "
                       << threadError);
     }
+
+  // Set extra thread parameters
+  SetThreadProcessPriority( m_SpawnedThreadProcessID[id] );
 
   return id;
 }
@@ -264,7 +271,31 @@ MultiThreader
     itkExceptionMacro(<< "Unable to create a thread.  pthread_create() returned "
                       << threadError);
     }
+
+  // Set extra thread parameters
+  SetThreadProcessPriority( threadHandle );
+
   return threadHandle;
+}
+
+void MultiThreader::SetThreadProcessPriority(ThreadProcessIdType threadHandle)
+{
+    struct sched_param param;
+
+    switch (m_GlobalThreadPriority) {
+    case 0:
+        param.sched_priority = 0;
+        pthread_setschedparam(threadHandle, SCHED_IDLE);
+        break;
+    case 1:
+        param.sched_priority = 0;
+        pthread_setschedparam(threadHandle, SCHED_OTHER);
+        break;
+    case 2:
+        param.sched_priority = 50;
+        pthread_setschedparam(threadHandle, SCHED_FIFO, &param);
+        break;
+    }
 }
 
 } // end namespace itk

@@ -82,6 +82,10 @@ public:
   static void SetGlobalMaximumNumberOfThreads(ThreadIdType val);
   static ThreadIdType  GetGlobalMaximumNumberOfThreads();
 
+  /** Set/Get the thread priority for each of the new spawning threads. */
+  static void SetGlobalThreadPriority(ThreadIdType val);
+  static ThreadIdType  GetGlobalThreadPriority();
+
   /** Set/Get whether to use the to use the thread pool
    * implementation or the spawing implementation of
    * starting threads.
@@ -235,6 +239,9 @@ private:
    */
   ThreadIdType m_NumberOfThreads;
 
+  /*  Global variable defining the thread priority for each new threads */
+  static ThreadIdType m_GlobalThreadPriority;
+
   /** Static function used as a "proxy callback" by the MultiThreader.  The
    * threading library will call this routine for each thread, which
    * will delegate the control to the prescribed SingleMethod. This
@@ -265,6 +272,9 @@ private:
    * abstraction needs to be added for MultipleMethod (SpawnThread
    * already has a routine to do this. */
   void WaitForSingleMethodThread(ThreadProcessIdType);
+
+  /** Sets the thread priority of a given thread Id */
+  void SetThreadProcessPriority(ThreadProcessIdType);
 
   /** Friends of Multithreader.
    * ProcessObject is a friend so that it can call PrintSelf() on its
