@@ -239,7 +239,7 @@ void MultiThreader::SetThreadProcessPriority(ThreadProcessIdType threadHandle)
       SetThreadPriority(threadHandle, THREAD_PRIORITY_LOWEST);
       break;
     case 1:
-      SetThreadPriority(threadHandle, THREAD_PRIORITY_NORMAL);
+      // Keep the system's default priority
       break;
     case 2:
       SetThreadPriority(threadHandle, THREAD_PRIORITY_HIGHEST);
