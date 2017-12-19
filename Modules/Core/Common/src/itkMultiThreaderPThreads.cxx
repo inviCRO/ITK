@@ -285,11 +285,11 @@ void MultiThreader::SetThreadProcessPriority(ThreadProcessIdType threadHandle)
     switch (m_GlobalThreadPriority) {
     case 0:
         param.sched_priority = 0;
-        pthread_setschedparam(threadHandle, SCHED_IDLE);
+        pthread_setschedparam(threadHandle, SCHED_IDLE, &param);
         break;
     case 1:
         param.sched_priority = 0;
-        pthread_setschedparam(threadHandle, SCHED_OTHER);
+        pthread_setschedparam(threadHandle, SCHED_OTHER, &param);
         break;
     case 2:
         param.sched_priority = 50;
