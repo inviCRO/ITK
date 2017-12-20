@@ -279,22 +279,25 @@ MultiThreader
 
 void MultiThreader::SetThreadProcessPriority(ThreadProcessIdType threadHandle)
 {
-    struct sched_param param;
+  struct sched_param param;
 
-    switch (m_GlobalThreadPriority) {
-    case 0:
-        param.sched_priority = 0;
-        pthread_setschedparam(threadHandle, SCHED_IDLE, &param);
-        break;
-    case 1:
-        param.sched_priority = 0;
-        pthread_setschedparam(threadHandle, SCHED_OTHER, &param);
-        break;
-    case 2:
-        param.sched_priority = 50;
-        pthread_setschedparam(threadHandle, SCHED_FIFO, &param);
-        break;
-    }
+  switch (m_GlobalThreadPriority) {
+  case 0:
+#if defined __APPLE__
+  // Do nothing
+#else
+    param.sched_priority = sched_get_priority_min( SCHED_IDLE );
+    pthread_setschedparam(threadHandle, SCHED_IDLE, &param);
+#endif
+    break;
+  case 1:
+    // Keep the system's default priority
+    break;
+  case 2:
+    param.sched_priority = sched_get_priority_max( SCHED_FIFO );
+    pthread_setschedparam(threadHandle, SCHED_FIFO, &param);
+    break;
+  }
 }
 
 } // end namespace itk
